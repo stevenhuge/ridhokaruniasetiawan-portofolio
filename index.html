@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles untuk tema futuristik */
+        /* --- Custom Styles Redesign --- */
+        :root {
+            --bg-color: #0d0c1d; /* Deeper night blue */
+            --primary-glow: #00ffff; /* Cyan */
+            --secondary-glow: #9f00ff; /* Electric purple */
+        }
+
         body {
-            background-color: #0a0a1a;
+            background-color: var(--bg-color);
             color: #e0e0e0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -21,179 +27,153 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        .glass-card {
-            background: rgba(16, 16, 32, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            transition: all 0.3s ease;
+        /* New Glow Effect for Text */
+        .neon-text-primary {
+            color: var(--primary-glow);
+            text-shadow: 0 0 4px var(--primary-glow), 0 0 8px var(--primary-glow), 0 0 16px rgba(0, 255, 255, 0.5);
+        }
+        .neon-text-secondary {
+            color: var(--secondary-glow);
+            text-shadow: 0 0 4px var(--secondary-glow), 0 0 8px var(--secondary-glow);
         }
 
-        .glass-card:hover {
-            border-color: rgba(0, 255, 255, 0.7);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            transform: translateY(-5px);
+        /* Redesigned Card with Gradient Border */
+        .glass-card-v2 {
+            background: linear-gradient(145deg, rgba(25, 27, 48, 0.5), rgba(13, 12, 29, 0.7));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
-
-        .neon-text {
-            color: #00ffff;
-            text-shadow:
-                0 0 5px #00ffff,
-                0 0 10px #00ffff,
-                0 0 20px #00ffff,
-                0 0 40px #0ff;
+        .glass-card-v2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 0.5rem; 
+            padding: 1px;
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.3), rgba(159, 0, 255, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+        .glass-card-v2:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .glass-card-v2:hover::before {
+            background: linear-gradient(145deg, var(--primary-glow), var(--secondary-glow));
         }
         
-        .neon-button {
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
+        /* Redesigned Button */
+        .neon-button-v2 {
+            background: transparent;
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow);
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) inset, 0 0 10px rgba(0, 255, 255, 0.3);
+            font-weight: 700;
+        }
+        .neon-button-v2:hover:not(:disabled) {
+            background: var(--primary-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .neon-button-v2:disabled {
+            cursor: not-allowed; opacity: 0.4;
         }
 
-        .neon-button:hover:not(:disabled) {
-            background-color: #00ffff;
-            color: #0a0a1a;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-            text-shadow: none;
-        }
-        
-        .neon-button:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-            border-color: rgba(0, 255, 255, 0.3);
-            color: rgba(0, 255, 255, 0.3);
-            text-shadow: none;
-        }
-
-        /* Animasi untuk scroll */
+        /* Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* Single Column Timeline */
         .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            bottom: 0; 
             width: 2px;
-            background: rgba(0, 255, 255, 0.3);
-            transform: translateX(-50%);
+            background: linear-gradient(180deg, transparent, var(--primary-glow), transparent);
+            left: 8px; /* Adjusted to align with the dot */
         }
-
-        .timeline-item {
-            position: relative;
-            width: 50%;
-            padding: 20px 40px;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            left: 0;
-            padding-right: 60px;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            padding-left: 60px;
-        }
-
         .timeline-dot {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 16px;
+            content: ''; 
+            position: absolute; 
+            top: 28px; 
+            width: 16px; 
             height: 16px;
-            border-radius: 50%;
-            background: #00ffff;
-            border: 3px solid #0a0a1a;
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px #00ffff;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-dot {
-           right: -8px;
-           left: auto;
-           transform: translateX(0);
-        }
-        .timeline-item:nth-child(even) .timeline-dot {
-           left: -8px;
-           transform: translateX(0);
-        }
-
-        /* Canvas background */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
+            border-radius: 50%; 
+            background: var(--primary-glow); 
+            border: 3px solid var(--bg-color);
+            box-shadow: 0 0 10px var(--primary-glow); 
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
         }
         
-        /* Loader untuk AI Assistant */
+        .timeline-item { 
+            position: relative; 
+            width: 100%; 
+            padding-left: 40px; /* Distance from the timeline line */
+            padding-bottom: 40px; /* Space between items */
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        /* Background Canvas */
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        
+        /* AI Loader */
         .loader {
-            width: 24px;
-            height: 24px;
-            border: 3px solid #00ffff;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
+            width: 24px; height: 24px; border: 3px solid var(--primary-glow);
+            border-bottom-color: transparent; border-radius: 50%; display: inline-block;
+            box-sizing: border-box; animation: rotation 1s linear infinite;
         }
-
-        @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Image Modal */
+        .modal { transition: opacity 0.3s ease; }
+        .modal-content { transition: transform 0.3s ease; }
     </style>
 </head>
-<body class="bg-[#0a0a1a]">
+<body class="bg-[#0d0c1d]">
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Header / Navigasi -->
-    <header class="bg-black/30 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-cyan-500/20">
+    <!-- Header / Navigation -->
+    <header class="bg-black/30 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-[var(--primary-glow)]/20">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-orbitron text-2xl font-bold tracking-widest neon-text">RKS</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-300 hover:text-cyan-400 transition duration-300">Tentang</a>
-                <a href="#ai-assistant" class="text-gray-300 hover:text-cyan-400 transition duration-300">Asisten AI</a>
-                <a href="#experience" class="text-gray-300 hover:text-cyan-400 transition duration-300">Pengalaman</a>
-                <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition duration-300">Proyek</a>
-                <a href="#education" class="text-gray-300 hover:text-cyan-400 transition duration-300">Pendidikan</a>
-                <a href="#skills" class="text-gray-300 hover:text-cyan-400 transition duration-300">Sertifikasi</a>
-                <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition duration-300">Kontak</a>
+            <a href="#" class="font-orbitron text-2xl font-bold tracking-widest neon-text-primary">Portofolio</a>
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm lg:text-base">
+                <a href="#about" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">About</a>
+                <a href="#ai-assistant" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">AI Assistant</a>
+                <a href="#experience" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">Experience</a>
+                <a href="#projects" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">Projects</a>
+                <a href="#education" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">Education</a>
+                <a href="#skills" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">Certifications</a>
+                <a href="#contact" class="text-gray-300 hover:text-[var(--primary-glow)] transition duration-300">Contact</a>
             </nav>
             <button class="md:hidden text-gray-300" id="mobile-menu-button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#about" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Tentang</a>
-            <a href="#ai-assistant" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Asisten AI</a>
-            <a href="#experience" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Pengalaman</a>
-            <a href="#projects" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Proyek</a>
-            <a href="#education" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Pendidikan</a>
-            <a href="#skills" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Sertifikasi</a>
-            <a href="#contact" class="block py-2 px-6 text-sm hover:bg-cyan-900/50">Kontak</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-lg">
+            <a href="#about" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">About</a>
+            <a href="#ai-assistant" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">AI Assistant</a>
+            <a href="#experience" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">Experience</a>
+            <a href="#projects" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">Projects</a>
+            <a href="#education" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">Education</a>
+            <a href="#skills" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">Certifications</a>
+            <a href="#contact" class="block py-3 px-6 text-sm hover:bg-[var(--primary-glow)]/20">Contact</a>
         </div>
     </header>
 
@@ -201,42 +181,48 @@
         <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center reveal">
             <div class="z-10">
-                <h1 id="typewriter-name" class="font-orbitron text-4xl md:text-7xl font-bold tracking-wider text-white mb-4"></h1>
-                <p class="text-lg md:text-2xl text-cyan-400 mb-8 max-w-3xl mx-auto">Junior Web Developer | Mahasiswa Sistem Informasi | Penggiat IT & Bisnis</p>
-                <a href="https://www.linkedin.com/in/ridho-karunia-setiawan-22360a271/" target="_blank" class="inline-block px-8 py-3 rounded-md font-bold neon-button">
-                    Kunjungi LinkedIn
+                <h1 id="typewriter-name" class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider text-white mb-4"></h1>
+                <p class="text-lg md:text-xl lg:text-2xl text-[var(--primary-glow)] mb-8 max-w-3xl mx-auto">Artificial Intelligence | Information Technology | Game Dev | IT Business Enthusiast</p>
+                <a href="https://www.linkedin.com/in/ridho-karunia-setiawan-22360a271/" target="_blank" class="inline-block px-8 py-3 rounded-md neon-button-v2">
+                    Visit LinkedIn
                 </a>
             </div>
         </section>
 
-        <!-- Tentang Saya -->
+        <!-- About Me -->
         <section id="about" class="py-20 reveal">
-            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">Tentang Saya</h2>
-            <div class="glass-card p-8 rounded-lg max-w-4xl mx-auto">
-                <p class="text-lg leading-relaxed text-gray-300">
-                    Lahir di Kabupaten Karanganyar dan merupakan lulusan SMK Negeri 2 Surakarta jurusan Rekayasa Perangkat Lunak. Ketertarikan saya pada dunia pemrograman dimulai sejak saya masuk SMK. Selama tiga tahun, saya mengikuti berbagai pelatihan dari tingkat pemula hingga mahir. Selain itu, saya berhasil memperoleh beberapa sertifikasi, termasuk sertifikasi BNSP sebagai Junior Web Developer dan sertifikasi dari perusahaan IT di Surakarta.
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">About Me</h2>
+            <div class="glass-card-v2 p-6 md:p-8 rounded-lg max-w-4xl mx-auto" style="text-align: justify;">
+                <p class="text-base md:text-lg leading-relaxed text-gray-300">
+                    I am a dedicated and certified Junior Web Developer, originally from Karanganyar Regency and a graduate of SMK Negeri 2 Surakarta, where I majored in Software Engineering. My passion for technology was sparked in vocational school, leading me to pursue comprehensive training programs and achieve key industry certifications from BNSP. 
                 </p>
-                <p class="mt-4 text-lg leading-relaxed text-gray-300">
-                    Pengalaman saya juga mencakup magang di Universitas Gadjah Mada, tepatnya di Sekolah Vokasi, di mana saya bekerja sebagai Android Developer dan Frontend Web Developer selama enam bulan. Saat ini, saya sedang menempuh pendidikan S1 Sistem Informasi di Universitas Amikom Yogyakarta. Tujuan saya adalah untuk meningkatkan dan memperdalam pengetahuan saya di bidang IT, serta mengeksplorasi minat saya dalam bisnis IT.
+                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                    My professional experience includes a formative internship at Gadjah Mada University's Vocational School, where I contributed as both an Android and Frontend Web Developer, gaining valuable hands-on experience in a dynamic academic environment.
+                </p>
+                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                    Currently, I am advancing my expertise by pursuing a Bachelor's degree in Information Systems at Amikom University Yogyakarta. My academic pursuits are complemented by a deep dive into game development, where I am mastering new programming languages such as C++. As a creator, I also develop educational IT-themed games using Roblox Studio.
+                </p>
+                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                    Driven by an entrepreneurial spirit and a desire to create impactful solutions, I have founded FoodLink, a business product designed to combat food waste in Indonesia. My overarching career goal is to continue to innovate at the intersection of technology and business, leveraging my skills to solve meaningful real-world challenges.
                 </p>
             </div>
         </section>
         
-        <!-- Asisten Karir AI -->
+        <!-- AI Career Assistant -->
         <section id="ai-assistant" class="py-20 reveal">
-            <h2 class="font-orbitron text-4xl font-bold text-center mb-4 neon-text">Asisten Karir AI</h2>
-            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Punya pertanyaan tentang kualifikasi saya? Tanyakan pada asisten AI yang ditenagai oleh Google Gemini.</p>
-            <div class="glass-card p-8 rounded-lg max-w-4xl mx-auto">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-4 neon-text-primary">AI Career Assistant</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Have questions about my qualifications? Ask my AI assistant, powered by Google Gemini.</p>
+            <div class="glass-card-v2 p-6 md:p-8 rounded-lg max-w-4xl mx-auto">
                 <div class="space-y-4">
-                    <label for="ai-question" class="block text-cyan-400">Pertanyaan Anda:</label>
-                    <input type="text" id="ai-question" class="w-full bg-black/30 border border-cyan-500/50 rounded-md p-3 text-white focus:ring-2 focus:ring-cyan-400 focus:outline-none" placeholder="Contoh: Proyek apa yang paling relevan untuk posisi frontend?">
-                    <button id="ask-ai-btn" class="w-full flex justify-center items-center gap-2 px-8 py-3 rounded-md font-bold neon-button">
-                        ✨ Tanyakan pada AI
+                    <label for="ai-question" class="block text-[var(--primary-glow)]">Your Question:</label>
+                    <input type="text" id="ai-question" class="w-full bg-black/30 border border-white/20 rounded-md p-3 text-white focus:ring-2 focus:ring-[var(--primary-glow)] focus:border-[var(--primary-glow)] focus:outline-none transition" placeholder="e.g., Which project is most relevant for a frontend position?">
+                    <button id="ask-ai-btn" class="w-full flex justify-center items-center gap-2 px-8 py-3 rounded-md neon-button-v2">
+                        ✨ Ask AI
                     </button>
                 </div>
-                <div id="ai-response-container" class="mt-6 border-t border-cyan-500/20 pt-6 min-h-[100px]">
-                    <h3 class="text-cyan-400 mb-2">Jawaban AI:</h3>
-                    <div id="ai-response" class="text-gray-300 leading-relaxed whitespace-pre-wrap">Silakan ajukan pertanyaan di atas.</div>
+                <div class="mt-6 border-t border-white/10 pt-6 min-h-[100px]">
+                    <h3 class="text-[var(--primary-glow)] mb-2">AI's Answer:</h3>
+                    <div id="ai-response" class="text-gray-300 leading-relaxed whitespace-pre-wrap">Please ask a question above.</div>
                     <div id="ai-loader" class="hidden flex justify-center items-center py-4">
                         <div class="loader"></div>
                     </div>
@@ -244,425 +230,508 @@
             </div>
         </section>
 
-        <!-- Pengalaman -->
+        <!-- Professional Experience -->
         <section id="experience" class="py-20">
-             <h2 class="font-orbitron text-4xl font-bold text-center mb-20 neon-text reveal">Pengalaman Profesional</h2>
+             <h2 class="font-orbitron text-4xl font-bold text-center mb-20 neon-text-primary reveal">Professional Experience</h2>
              <div class="relative max-w-4xl mx-auto timeline">
-                <!-- Timeline Item -->
+                
+                <!-- Item 1: General Legal Counsel -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="glass-card p-6 rounded-lg">
-                        <p class="text-sm text-cyan-400">Mei 2025 - Saat ini</p>
-                        <h3 class="text-xl font-bold text-white mt-1">General Legal Counsel</h3>
-                        <p class="text-gray-400">JCI (Junior Chamber International)</p>
-                        <p class="mt-2 text-sm text-gray-300">Menjabat sebagai Junior General Legal Counsel di JJC Amikom University Yogyakarta.</p>
-                        <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                            <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                            <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Pendukung" class="rounded">
+                    <div class="glass-card-v2 p-6 rounded-lg">
+                        <div class="flex items-start gap-4">
+                            <img src="pictures/jci.jpeg" alt="JCI Logo" class="w-12 h-12 rounded-lg border border-[var(--primary-glow)]/50 object-cover flex-shrink-0">
+                            <div class="flex-grow">
+                                <p class="text-sm text-[var(--primary-glow)]">May 2025 - Present</p>
+                                <h3 class="text-xl font-bold text-white mt-1">General Legal Counsel</h3>
+                                <p class="text-gray-400">JCI (Junior Chamber International)</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 pl-16 text-sm text-gray-300">Serving as Junior General Legal Counsel at JJC Amikom University Yogyakarta.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Wordpress IT Mentor -->
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-card-v2 p-6 rounded-lg">
+                        <div class="flex items-start gap-4">
+                             <img src="pictures/amcc.jpeg" alt="AMCC Logo" class="w-12 h-12 rounded-lg border border-[var(--primary-glow)]/50 object-cover flex-shrink-0">
+                            <div class="flex-grow">
+                                <p class="text-sm text-[var(--primary-glow)]">Feb 2025</p>
+                                <h3 class="text-xl font-bold text-white mt-1">Wordpress IT Mentor</h3>
+                                <p class="text-gray-400">Amikom Computer Club</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 pl-16 text-sm text-gray-300" style="text-align: justify;">AGS (AMCC Goes to School) 2025 is an educational program where I served as a mentor for high school students, introducing them to fundamental IT knowledge. I guided them in exploring their potential by helping them build their own digital portfolios using WordPress. Through this program, students published their work online, allowing it to be accessed by a wider audience — an early step toward building their digital presence and professional identity.</p>
+                        <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4 ml-16">
+                            <a href="https://drive.google.com/file/d/1KSF_oCydjfudMCA685HH1T6ufiiOnrJD/view?usp=sharing" target="_blank" class="text-xs neon-button-v2 px-3 py-1 rounded-md flex-shrink-0">View Certificate</a>
+                             <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                                <img src="pictures/ags1.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/ags2.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/ags3.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                            </div>
                         </div>
                     </div>
                 </div>
-                 <!-- Timeline Item -->
+
+                <!-- Item 3: Moderator -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="glass-card p-6 rounded-lg">
-                        <p class="text-sm text-cyan-400">Feb 2025</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Wordpress IT Mentor</h3>
-                        <p class="text-gray-400">Amikom Computer Club</p>
-                        <p class="mt-2 text-sm text-gray-300">Menjadi mentor bagi siswa SMA dalam program AMCC Goes to School 2025.</p>
-                         <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                            <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                            <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Pendukung" class="rounded">
+                    <div class="glass-card-v2 p-6 rounded-lg">
+                         <div class="flex items-start gap-4">
+                             <img src="https://placehold.co/64x64/0d0c1d/ffffff?text=SLE" alt="CV SLE Logo" class="w-12 h-12 rounded-lg border border-[var(--primary-glow)]/50 object-cover flex-shrink-0">
+                            <div class="flex-grow">
+                                <p class="text-sm text-[var(--primary-glow)]">May 2024 - Sep 2024</p>
+                                <h3 class="text-xl font-bold text-white mt-1">Moderator</h3>
+                                <p class="text-gray-400">CV Sumber Lumintu Elsindo</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 pl-16 text-sm text-gray-300">Helping to create Artificial Intelligence materials to educate teachers in schools about the use of AI.</p>
+                        <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4 ml-16">
+                             <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                                <img src="pictures/sle1.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/sle2.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/sle3.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/sle4.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/sle5.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                            </div>
                         </div>
                     </div>
                 </div>
-                 <!-- Timeline Item -->
+
+                <!-- Item 4: Web Developer (Intern) -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="glass-card p-6 rounded-lg">
-                        <p class="text-sm text-cyan-400">Mei 2024 - Sep 2024</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Moderator</h3>
-                        <p class="text-gray-400">CV Sumber Lumintu Elsindo</p>
-                    </div>
-                </div>
-                <!-- Timeline Item -->
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card p-6 rounded-lg">
-                        <p class="text-sm text-cyan-400">Jul 2023 - Des 2023</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Web Developer (Intern)</h3>
-                        <p class="text-gray-400">Sekolah Vokasi UGM</p>
-                        <p class="mt-2 text-sm text-gray-300">Bug Fixing, pengembangan Frontend, dan bekerja dengan WordPress.</p>
-                         <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                            <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                            <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Pendukung" class="rounded">
+                    <div class="glass-card-v2 p-6 rounded-lg">
+                        <div class="flex items-start gap-4">
+                             <img src="pictures/ugm.png" alt="UGM Logo" class="w-12 h-12 rounded-lg border border-[var(--primary-glow)]/50 object-cover flex-shrink-0">
+                            <div class="flex-grow">
+                                <p class="text-sm text-[var(--primary-glow)]">Jul 2023 - Dec 2023</p>
+                                <h3 class="text-xl font-bold text-white mt-1">Web Developer (Intern)</h3>
+                                <p class="text-gray-400">Vocational School UGM</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 pl-16 text-sm text-gray-300">Involved in bug fixing, frontend development, and working with WordPress.</p>
+                        <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4 ml-16">
+                            <a href="https://drive.google.com/file/d/1mVyzxB4Q82u0IX2LkwADnsv7wtdKY9-T/view?usp=sharing" target="_blank" class="text-xs neon-button-v2 px-3 py-1 rounded-md flex-shrink-0">View Certificate</a>
+                             <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                                <img src="pictures/web1.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/web2.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/web3.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/web4.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/web5.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Timeline Item -->
-                 <div class="timeline-item reveal">
+
+                <!-- Item 5: Android Developer (Intern) -->
+                <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="glass-card p-6 rounded-lg">
-                        <p class="text-sm text-cyan-400">Jun 2023 - Jul 2023</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Android Developer (Intern)</h3>
-                        <p class="text-gray-400">Sekolah Vokasi UGM</p>
-                        <p class="mt-2 text-sm text-gray-300">Mengembangkan aplikasi AR "Biomastery" menggunakan Unity.</p>
-                         <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                            <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                            <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Pendukung" class="rounded">
+                    <div class="glass-card-v2 p-6 rounded-lg">
+                        <div class="flex items-start gap-4">
+                             <img src="pictures/ugm.png" alt="UGM Logo" class="w-12 h-12 rounded-lg border border-[var(--primary-glow)]/50 object-cover flex-shrink-0">
+                             <div class="flex-grow">
+                                <p class="text-sm text-[var(--primary-glow)]">Jun 2023 - Jul 2023</p>
+                                <h3 class="text-xl font-bold text-white mt-1">Android Developer (Intern)</h3>
+                                <p class="text-gray-400">Vocational School UGM</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 pl-16 text-sm text-gray-300" style="text-align: justify;">Create an application called Biomastery based on Augmented Reality 3D Scan Object with Unity Software and Vuforia License, with application contents of several tutorial menus, evaluations, achievements, etc. then the SCAN Object feature to display a 3D Model containing related information.</p>
+                        <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4 ml-16">
+                            <a href="https://drive.google.com/file/d/1mVyzxB4Q82u0IX2LkwADnsv7wtdKY9-T/view?usp=sharing" target="_blank" class="text-xs neon-button-v2 px-3 py-1 rounded-md flex-shrink-0">View Certificate</a>
+                             <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                                <img src="pictures/ar.jpeg" alt="Gallery 1" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                                <img src="pictures/ar2.jpeg" alt="Gallery 2" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                            </div>
                         </div>
                     </div>
                 </div>
+
              </div>
         </section>
 
-        <!-- Proyek -->
+        <!-- My Projects -->
         <section id="projects" class="py-20 reveal">
-            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">Proyek Saya</h2>
-            <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project Card 1 -->
-                <div class="glass-card rounded-lg overflow-hidden flex flex-col">
-                    <img src="https://placehold.co/600x400/1a1a2e/00ffff?text=Aplikasi+Biomastery" alt="Proyek Aplikasi Biomastery" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-white">Aplikasi AR Biomastery</h3>
-                        <p class="mt-2 text-gray-300 flex-grow">Aplikasi pembelajaran biologi berbasis Augmented Reality untuk memvisualisasikan objek 3D, dikembangkan dengan Unity & Vuforia.</p>
-                        <div class="mt-4 flex gap-4">
-                            <a href="#" target="_blank" class="text-sm neon-button px-4 py-2 rounded-md">Detail</a>
-                        </div>
-                    </div>
+    <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">My Projects</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="pictures/ar.jpeg" alt="Biomastery App Project" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">Biomastery Augmented Reality App</h3>
+                <p class="mt-2 text-gray-300 flex-grow">An Augmented Reality based biology learning app to visualize 3D objects, developed with Unity & Vuforia.</p>
+                <div class="flex gap-2 flex-wrap my-4">
+                    <br />
                 </div>
-                 <!-- Project Card 2 -->
-                 <div class="glass-card rounded-lg overflow-hidden flex flex-col">
-                    <img src="https://placehold.co/600x400/1a1a2e/00ffff?text=Web+Desa" alt="Proyek Web Desa" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-white">Sistem CRUD Organisasi</h3>
-                        <p class="mt-2 text-gray-300 flex-grow">Membuat sistem CRUD untuk organisasi masyarakat menggunakan PHP Laravel dan MySQL, menjadi juara 2 LKS Web Technologies.</p>
-                        <div class="mt-4 flex gap-4">
-                            <a href="#" target="_blank" class="text-sm neon-button px-4 py-2 rounded-md">Source Code</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project Card 3 -->
-                <div class="glass-card rounded-lg overflow-hidden flex flex-col">
-                    <img src="https://placehold.co/600x400/1a1a2e/00ffff?text=Portofolio+WordPress" alt="Proyek Portofolio WordPress" class="w-full h-48 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-white">Portofolio Digital WordPress</h3>
-                        <p class="mt-2 text-gray-300 flex-grow">Membimbing siswa dalam pembuatan portofolio online menggunakan WordPress untuk menampilkan karya mereka kepada audiens yang lebih luas.</p>
-                         <div class="mt-4 flex gap-4">
-                            <a href="#" target="_blank" class="text-sm neon-button px-4 py-2 rounded-md">Lihat Contoh</a>
-                        </div>
-                    </div>
+                <div class="mt-auto flex flex-col gap-2">
+                    <button class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center" disabled>Visit</button>
+                    <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Request Code
+                    </button>
                 </div>
             </div>
+        </div>
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="pictures/web1.jpeg" alt="CRUD System Project" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">Rumah EPS Topik</h3>
+                <p class="mt-2 text-gray-300 flex-grow">Korean language learning education platform for job requirements</p>
+                <div class="mt-auto flex flex-col gap-2">
+                    <button class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center" disabled>Visit</button>
+                    <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Request Code
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="pictures/web4.jpeg" alt="KPH Yogyakarta" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">Kesatuan Pengelolaan Hutan - Yogyakarta</h3>
+                <p class="mt-2 text-gray-300 flex-grow">The website for recording forest management, especially in Yogyakarta, involves large amounts of data.</p>
+                <div class="mt-auto flex flex-col gap-2">
+                    <a href="https://kph.trpl.space/" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center">Visit</a>
+                    <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Request Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="pictures/web2.jpeg" alt="Biomastery App Project" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">Lembaga Sertifikasi Profesi UGM</h3>
+                <p class="mt-2 text-gray-300 flex-grow">Information website for the Professional Certification Institute of Gadjah Mada University</p>
+                <div class="flex gap-2 flex-wrap my-4">
+                    <br />
+                </div>
+                <div class="mt-auto flex flex-col gap-2">
+                    <a href="https://lsp.ugm.ac.id/" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center" disabled>Visit</a>
+                    <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Request Code
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+    <img src="pictures/jamu.png" alt="CRUD System Project" class="w-full h-48 object-cover gallery-img cursor-pointer">
+    <div class="p-6 flex flex-col flex-grow">
+        <h3 class="text-xl font-bold text-white">UI & UX Jamu.Id</h3>
+        <p class="mt-2 text-gray-300 flex-grow">User Interface and UX of herbal medicine sales shop website and mobile versions</p>
+        <div class="mt-auto flex flex-col gap-2">
+            <div class="flex gap-2"> 
+                <a href="https://www.figma.com/proto/3tWpTMkWS3kVJx3NkUfIuw/Jamu.id?node-id=107-40&t=qrRDH1XU4vdCL8Kl-1" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md flex-1 text-center flex items-center justify-center" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm0 2h12v10H4V5z" /></svg>
+                    <p style="margin-left: 5px;">Website</p>
+                </a>
+                <a href="https://www.figma.com/proto/3tWpTMkWS3kVJx3NkUfIuw/Jamu.id?node-id=107-40&t=qrRDH1XU4vdCL8Kl-1" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md flex-1 text-center flex items-center justify-center" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+                    <p style="margin-left: 5px;">Mobile</p>
+                </a>
+            </div>
+            <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                Request Code
+            </button>
+        </div>
+    </div>
+</div>
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="pictures/foodlink.png" alt="KPH Yogyakarta" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">UI & UX SahabatPangan | Foodlink</h3>
+                <p class="mt-2 text-gray-300 flex-grow">User Interface and UX about my product business to overcome food waste</p>
+                <div class="mt-auto flex flex-col gap-2">
+                    <a href="https://www.figma.com/proto/ecmYeBOVJc19GhgJPSIJ7k/UI---UX-SahabatPangan?node-id=1-929&t=sKaN9EoXGUnkYUi5-1" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center">Visit</a>
+                    <button class="request-code-btn text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Request Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="glass-card-v2 rounded-lg overflow-hidden flex flex-col">
+            <img src="https://placehold.co/64x64/0d0c1d/ffffff?text=MySaham" class="w-full h-48 object-cover gallery-img cursor-pointer">
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white">MySaham - Console App</h3>
+                <p class="mt-2 text-gray-300 flex-grow">Console application about selling mutual funds, bonds and shares c++ and kotlin version</p>
+                <div class="flex gap-2 flex-wrap my-4">
+                    <br />
+                </div>
+                <div class="mt-auto flex flex-col gap-2">
+                    <a href="https://lsp.ugm.ac.id/" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center" disabled>Visit</a>
+                    <a href="https://github.com/stevenhuge/mySaham/blob/main/mySaham.cpp" target="_blank" class="text-sm neon-button-v2 px-3 py-1 rounded-md w-full text-center flex items-center justify-center gap-2">
+                        Source Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
         </section>
 
-        <!-- Pendidikan -->
+<div id="source-code-modal" class="modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 hidden opacity-0">
+    <div class="modal-content bg-gray-900/50 backdrop-blur-sm border border-white/10 p-8 rounded-lg max-w-lg w-full transform scale-95 text-center">
+        <h3 class="font-orbitron text-2xl font-bold neon-text-primary mb-4">Request Source Code</h3>
+        <p class="text-gray-300 mb-6">
+            For confidentiality and copyright reasons, the source code for this project is private. Please contact me via email to discuss access.
+        </p>
+        <a href="mailto:ridhokaruniasetiawan999@gmail.com" class="inline-block px-8 py-3 rounded-md neon-button-v2">
+            Contact via Email
+        </a>
+    </div>
+    <button id="close-source-code-modal-btn" class="absolute top-4 right-4 text-white text-5xl hover:text-[var(--primary-glow)] transition-colors">&times;</button>
+</div>
+
+<script>
+    // --- Source Code Request Modal Logic ---
+const sourceCodeModal = document.getElementById('source-code-modal');
+const closeSourceCodeModalBtn = document.getElementById('close-source-code-modal-btn');
+const requestButtons = document.querySelectorAll('.request-code-btn');
+
+const openSourceCodeModal = () => {
+    sourceCodeModal.classList.remove('hidden', 'opacity-0');
+    sourceCodeModal.querySelector('.modal-content').classList.remove('scale-95');
+};
+
+const closeSourceCodeModal = () => {
+    sourceCodeModal.classList.add('opacity-0');
+    sourceCodeModal.querySelector('.modal-content').classList.add('scale-95');
+    setTimeout(() => sourceCodeModal.classList.add('hidden'), 300);
+};
+
+requestButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSourceCodeModal();
+    });
+});
+
+closeSourceCodeModalBtn.addEventListener('click', closeSourceCodeModal);
+sourceCodeModal.addEventListener('click', (e) => {
+    if (e.target === sourceCodeModal) {
+        closeSourceCodeModal();
+    }
+});
+
+// Update event listener Escape key agar bisa menutup modal yang aktif
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (!imageModal.classList.contains('hidden')) {
+            closeModal(); // Menutup modal gambar jika terbuka
+        }
+        if (!sourceCodeModal.classList.contains('hidden')) {
+            closeSourceCodeModal(); // Menutup modal source code jika terbuka
+        }
+    }
+});
+</script>
+
+        <!-- Education -->
         <section id="education" class="py-20 reveal">
-            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">Pendidikan</h2>
-            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                <div class="glass-card p-6 rounded-lg">
-                    <p class="text-sm text-cyan-400">Sep 2024 - Sep 2028 (Diharapkan)</p>
-                    <h3 class="text-xl font-bold text-white mt-1">Universitas AMIKOM Yogyakarta</h3>
-                    <p class="text-gray-400">Gelar Sarjana, Sistem Informasi</p>
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">Education</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card-v2 p-6 rounded-lg">
+                    <p class="text-sm text-[var(--primary-glow)]">Sep 2024 - Sep 2028 (Expected)</p>
+                    <h3 class="text-xl font-bold text-white mt-1">Amikom University of Yogyakarta</h3>
+                    <p class="text-gray-400">Bachelor's Degree, Information Systems</p>
                 </div>
-                <div class="glass-card p-6 rounded-lg">
-                    <p class="text-sm text-cyan-400">Jul 2021 - Mei 2024</p>
+                <div class="glass-card-v2 p-6 rounded-lg">
+                    <p class="text-sm text-[var(--primary-glow)]">Jul 2021 - May 2024</p>
                     <h3 class="text-xl font-bold text-white mt-1">SMK Negeri 2 Surakarta</h3>
-                    <p class="text-gray-400">Rekayasa Perangkat Lunak</p>
+                    <p class="text-gray-400">Software Engineering</p>
                 </div>
             </div>
         </section>
 
-        <!-- Keahlian, Lisensi & Sertifikasi -->
+        <!-- Licenses & Certifications -->
         <section id="skills" class="py-20 reveal">
-            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text">Lisensi & Sertifikasi</h2>
-             <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                <div class="glass-card p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-white">Junior Web Developer</h3>
-                    <p class="text-gray-400">Badan Nasional Sertifikasi Profesi (BNSP)</p>
-                    <p class="text-sm text-cyan-400 mt-2">Diterbitkan Mei 2024</p>
-                </div>
-                <div class="glass-card p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-white">Asisten Pemrograman Junior</h3>
-                    <p class="text-gray-400">PT. ABAD JAYA SENANTIASA</p>
-                    <p class="text-sm text-cyan-400 mt-2">Diterbitkan Mei 2024</p>
-                </div>
-             </div>
-             <h3 class="font-orbitron text-3xl font-bold text-center mt-20 mb-8 text-white">Penghargaan</h3>
-             <div class="max-w-4xl mx-auto space-y-6">
-                <div class="glass-card p-6 rounded-lg">
-                    <p class="text-sm text-cyan-400">Jan 2025</p>
-                    <h4 class="text-lg font-bold text-white">Nominasi Gelar Karya Mahasiswa Sistem Informasi</h4>
-                    <p class="text-gray-400">Kategori Pemrograman oleh Universitas AMIKOM Yogyakarta</p>
-                    <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                        <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                        <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Penghargaan" class="rounded">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">Licenses & Certifications</h2>
+             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card-v2 p-6 rounded-lg flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-white">Junior Web Developer</h3>
+                        <p class="text-gray-400">National Professional Certification Body (BNSP)</p>
+                        <p class="text-sm text-[var(--primary-glow)] mt-2">Issued May 2024</p>
+                    </div>
+                     <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4">
+                        <a href="https://drive.google.com/file/d/10952R9i5DNpV-Fj3Uo0H3hC5MLhEam9l/view" target="_blank" class="text-xs neon-button-v2 px-3 py-1 rounded-md flex-shrink-0">View Credential</a>
+                        <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                           <img src="pictures/certificate/Scan_Sertif BNSP Siswa_SMKN  2 Surakarta JWD-19_page-0001.jpg" alt="BNSP Certificate" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                           <img src="pictures/certificate/Scan_Sertif BNSP Siswa_SMKN  2 Surakarta JWD-19_page-0002.jpg" alt="BNSP Certificate" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card p-6 rounded-lg">
-                     <p class="text-sm text-cyan-400">Mar 2024</p>
-                    <h4 class="text-lg font-bold text-white">Juara 2 - Lomba Kompetensi Siswa SMK</h4>
-                    <p class="text-gray-400">Kategori Desain Laman (Web Technologies) tingkat Kota Surakarta</p>
-                     <div class="mt-4 border-t border-cyan-500/20 pt-4 flex justify-between items-center">
-                        <a href="#" target="_blank" class="text-xs neon-button px-3 py-1 rounded-md">Sertifikat</a>
-                        <img src="https://placehold.co/80x45/0a0a1a/00ffff?text=Gambar" alt="Gambar Penghargaan" class="rounded">
+                <div class="glass-card-v2 p-6 rounded-lg flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-white">Junior Programming Assistant</h3>
+                        <p class="text-gray-400">PT. ABAD JAYA SENANTIASA</p>
+                        <p class="text-sm text-[var(--primary-glow)] mt-2">Issued May 2024</p>
+                    </div>
+                    <div class="mt-4 border-t border-white/10 pt-4 flex flex-col items-start gap-4">
+                        <a href="https://drive.google.com/file/d/1QAyZDaAEsD4YNyUen9fCuiowIkb56ezn/view" target="_blank" class="text-xs neon-button-v2 px-3 py-1 rounded-md flex-shrink-0">View Credential</a>
+                        <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                           <img src="pictures/certificate/Sertifikasi Abad Jaya_page-0001.jpg" alt="PT AJS Certificate" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                           <img src="pictures/certificate/Sertifikasi Abad Jaya_page-0002.jpg" alt="PT AJS Certificate" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                        </div>
                     </div>
                 </div>
              </div>
+             <h3 class="font-orbitron text-3xl font-bold text-center mt-20 mb-8 text-white">Awards</h3>
+             <div class="max-w-4xl mx-auto space-y-8">
+        <div class="glass-card-v2 p-6 rounded-lg">
+            <p class="text-sm text-[var(--primary-glow)]">March 2024</p>
+            <h4 class="text-lg font-bold text-white">2nd Place - Vocational School Student Competition</h4>
+            <p class="text-gray-400">Web Technologies Design category, Surakarta City Level</p>
+            <div class="mt-4 border-t border-white/10 pt-4 flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                   <img src="pictures/certificate/Sert_LKS.jpeg" alt="LKS Certificate" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card-v2 p-6 rounded-lg">
+            <p class="text-sm text-[var(--primary-glow)]">January 2025</p>
+            <h4 class="text-lg font-bold text-white">Nomination - Student Work Exhibition of Information Systems University Amikom Yogyakarta</h4>
+            <p class="text-gray-400">Programming Skill - Category, Study Program Level</p>
+            <div class="mt-4 border-t border-white/10 pt-4 flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                   <img src="pictures/certificate/sertif_gemasi_page-0001.jpg" alt="Award Certificate Placeholder" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                </div>
+            </div>
+        </div>
         </section>
 
-        <!-- Kontak -->
+        <!-- Contact -->
         <section id="contact" class="py-20 text-center reveal">
-             <h2 class="font-orbitron text-4xl font-bold text-center mb-8 neon-text">Hubungi Saya</h2>
-             <p class="text-lg text-gray-300 mb-8">Saya terbuka untuk peluang kolaborasi dan proyek baru.</p>
-             <a href="mailto:emailanda@contoh.com" class="inline-block px-8 py-3 rounded-md font-bold neon-button">
-                    Kirim Email
+             <h2 class="font-orbitron text-4xl font-bold text-center mb-8 neon-text-primary">Contact Me</h2>
+             <p class="text-lg text-gray-300 mb-8">I'm open to new collaboration opportunities and projects.</p>
+             <a href="mailto:ridhokarunia999@example.com" class="inline-block px-8 py-3 rounded-md neon-button-v2">
+                    Send Email
                 </a>
         </section>
 
     </main>
     
     <!-- Footer -->
-    <footer class="border-t border-cyan-500/20 mt-20 py-8">
+    <footer class="border-t border-[var(--primary-glow)]/20 mt-20 py-8">
         <div class="container mx-auto px-6 text-center text-gray-500">
-            <p>&copy; 2025 Ridho Karunia Setiawan. Didesain dengan sentuhan futuristik.</p>
+            <p>&copy; 2025 Ridho Karunia Setiawan. All rights reserved.</p>
         </div>
     </footer>
+    
+    <!-- Image Modal -->
+    <div id="image-modal" class="modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-content bg-gray-900/50 backdrop-blur-sm border border-white/10 p-2 rounded-lg max-w-4xl max-h-full w-full transform scale-95">
+             <img id="modal-image" src="" alt="Enlarged Image View" class="w-full h-auto max-h-[85vh] object-contain rounded">
+        </div>
+        <button id="close-modal-btn" class="absolute top-4 right-4 text-white text-5xl hover:text-[var(--primary-glow)] transition-colors">&times;</button>
+    </div>
+
 
     <script>
-        // --- Script untuk Animasi Partikel di Latar Belakang ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particlesArray;
+            const particleCount = Math.floor(window.innerWidth / 25);
 
-        let particlesArray;
-
-        // Atur properti partikel
-        const particleCount = 100;
-        const particleColor = 'rgba(0, 255, 255, 0.7)';
-        const lineColor = 'rgba(0, 255, 255, 0.1)';
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+            class Particle {
+                constructor(x,y,dirX,dirY,size,color){this.x=x;this.y=y;this.directionX=dirX;this.directionY=dirY;this.size=size;this.color=color;}
+                draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2,false);ctx.fillStyle=this.color;ctx.fill();}
+                update(){if(this.x>canvas.width||this.x<0){this.directionX=-this.directionX;}
+                if(this.y>canvas.height||this.y<0){this.directionY=-this.directionY;}
+                this.x+=this.directionX;this.y+=this.directionY;this.draw();}
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-
-            update() {
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
+            function initParticles(){
+                particlesArray=[];
+                for(let i=0;i<particleCount;i++){
+                    let size=Math.random()*2+1;let x=Math.random()*(innerWidth-size*2)+size;let y=Math.random()*(innerHeight-size*2)+size;
+                    let dirX=(Math.random()*.4)-.2;let dirY=(Math.random()*.4)-.2;
+                    particlesArray.push(new Particle(x,y,dirX,dirY,size,'rgba(0,255,255,0.7)'));
                 }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
             }
-        }
 
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < particleCount; i++) {
-                let size = Math.random() * 2 + 1;
-                let x = Math.random() * (innerWidth - size * 2) + size;
-                let y = Math.random() * (innerHeight - size * 2) + size;
-                let directionX = (Math.random() * .4) - .2;
-                let directionY = (Math.random() * .4) - .2;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, particleColor));
-            }
-        }
-        
-        function connect() {
-            let opacityValue = 1;
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
-                        ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${opacityValue * 0.1})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
+            function connectParticles(){
+                for(let a=0;a<particlesArray.length;a++){
+                    for(let b=a;b<particlesArray.length;b++){
+                        let dist=((particlesArray[a].x-particlesArray[b].x)*(particlesArray[a].x-particlesArray[b].x))+((particlesArray[a].y-particlesArray[b].y)*(particlesArray[a].y-particlesArray[b].y));
+                        if(dist<(canvas.width/8)*(canvas.height/8)){
+                            let op=1-(dist/20000);
+                            ctx.strokeStyle=`rgba(0,255,255,${op*0.1})`;ctx.lineWidth=1;ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x,particlesArray[a].y);ctx.lineTo(particlesArray[b].x,particlesArray[b].y);ctx.stroke();
+                        }
                     }
                 }
             }
-        }
+            
+            function animateParticles(){requestAnimationFrame(animateParticles);ctx.clearRect(0,0,innerWidth,innerHeight);for(let i=0;i<particlesArray.length;i++){particlesArray[i].update();}connectParticles();}
+            
+            window.addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight;initParticles();});
+            initParticles();
+            animateParticles();
 
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-            connect();
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            init();
-        });
-
-        init();
-        animate();
-        
-        // --- Script untuk Efek Mengetik (Typewriter) ---
-        const nameText = "Ridho Karunia Setiawan";
-        const nameElement = document.getElementById('typewriter-name');
-        let i = 0;
-        function typeWriter() {
-            if (i < nameText.length) {
-                nameElement.innerHTML += nameText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        
-        // --- Script untuk Animasi saat Scroll ---
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            for (let i = 0; i < revealElements.length; i++) {
-                const elementTop = revealElements[i].getBoundingClientRect().top;
-                const elementVisible = 150; 
-                if (elementTop < windowHeight - elementVisible) {
-                    revealElements[i].classList.add('visible');
-                }
-            }
-        };
-        
-        // --- Script untuk Menu Mobile ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // --- GEMINI API SCRIPT ---
-        const askAiButton = document.getElementById('ask-ai-btn');
-        const aiQuestionInput = document.getElementById('ai-question');
-        const aiResponseEl = document.getElementById('ai-response');
-        const aiLoader = document.getElementById('ai-loader');
-
-        const systemPrompt = `
-            Anda adalah asisten AI karir untuk Ridho Karunia Setiawan. Tugas Anda adalah menjawab pertanyaan dari pengunjung portofolio (seperti perekrut) berdasarkan informasi yang diberikan di bawah ini. Jawablah secara profesional, ringkas, dan positif, seolah-olah Anda adalah juru bicara Ridho. Selalu gunakan informasi dari konteks ini. Jangan mengarang informasi.
-
-            --- KONTEKS INFORMASI RIDHO KARUNIA SETIAWAN ---
-
-            **Tentang Ridho:**
-            Lahir di Karanganyar, lulusan SMK Negeri 2 Surakarta (Rekayasa Perangkat Lunak). Memiliki minat besar pada pemrograman. Berpengalaman magang sebagai Android Developer dan Frontend Web Developer di Sekolah Vokasi UGM. Saat ini sedang menempuh S1 Sistem Informasi di Universitas Amikom Yogyakarta. Tertarik pada bidang IT dan bisnis IT.
-
-            **Pengalaman Profesional:**
-            - General Legal Counsel (JCI): Mei 2025 - Sekarang. Junior General Legal Counsel di JJC Amikom University Yogyakarta.
-            - Wordpress IT Mentor (Amikom Computer Club): Feb 2025. Mentor untuk siswa SMA dalam program AMCC Goes to School, membimbing pembuatan portofolio digital dengan WordPress.
-            - Moderator (CV Sumber Lumintu Elsindo): Mei 2024 - Sep 2024.
-            - Web Developer (Magang di Sekolah Vokasi UGM): Jul 2023 - Des 2023. Melakukan Bug Fixing, pengembangan Frontend Web, dan bekerja dengan WordPress.
-            - Android Developer (Magang di Sekolah Vokasi UGM): Jun 2023 - Jul 2023. Mengembangkan aplikasi Augmented Reality "Biomastery" menggunakan Unity dan Vuforia.
-
-            **Proyek Utama:**
-            1. Aplikasi AR Biomastery: Aplikasi pembelajaran biologi berbasis Augmented Reality untuk memvisualisasikan objek 3D, dikembangkan dengan Unity & Vuforia.
-            2. Sistem CRUD Organisasi: Sistem CRUD untuk organisasi masyarakat menggunakan PHP Laravel dan MySQL. Proyek ini memenangkan Juara 2 LKS Web Technologies.
-            3. Portofolio Digital WordPress: Membimbing siswa membuat portofolio online menggunakan WordPress.
-
-            **Pendidikan:**
-            - Universitas AMIKOM Yogyakarta: S1 Sistem Informasi (2024 - 2028).
-            - SMK Negeri 2 Surakarta: Rekayasa Perangkat Lunak (2021 - 2024).
-
-            **Lisensi & Sertifikasi:**
-            - Junior Web Developer dari BNSP (Mei 2024).
-            - Asisten Pemrograman Junior dari PT. ABAD JAYA SENANTIASA (Mei 2024).
-
-            **Penghargaan:**
-            - Nominasi Gelar Karya Mahasiswa Sistem Informasi: Kategori Pemrograman, Universitas AMIKOM Yogyakarta (Jan 2025).
-            - Juara 2 Lomba Kompetensi Siswa SMK Kota Surakarta: Kategori Desain Laman (Web Technologies) (Mar 2024).
-
-            --- AKHIR DARI KONTEKS ---
-
-            Jawab pertanyaan pengguna berdasarkan data di atas.
-        `;
-
-        const getAiResponse = async () => {
-            const userQuery = aiQuestionInput.value.trim();
-            if (!userQuery) {
-                aiResponseEl.textContent = "Silakan masukkan pertanyaan terlebih dahulu.";
-                return;
-            }
-
-            // Tampilkan loader dan nonaktifkan tombol
-            aiLoader.classList.remove('hidden');
-            aiResponseEl.textContent = '';
-            askAiButton.disabled = true;
-
-            const apiKey = ""; // Dibiarkan kosong, akan di-handle oleh environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    aiResponseEl.textContent = candidate.content.parts[0].text;
-                } else {
-                    aiResponseEl.textContent = "Maaf, terjadi kesalahan saat memproses jawaban. Silakan coba lagi.";
-                }
-
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                aiResponseEl.textContent = "Gagal terhubung dengan Asisten AI. Periksa koneksi Anda dan coba lagi.";
-            } finally {
-                // Sembunyikan loader dan aktifkan kembali tombol
-                aiLoader.classList.add('hidden');
-                askAiButton.disabled = false;
-            }
-        };
-
-        askAiButton.addEventListener('click', getAiResponse);
-        aiQuestionInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                getAiResponse();
-            }
-        });
-
-        // Event listener untuk semua script setelah DOM dimuat
-        document.addEventListener('DOMContentLoaded', () => {
+            const nameElement=document.getElementById('typewriter-name');
+            const nameText="Ridho Karunia Setiawan";let i=0;
+            function typeWriter(){if(nameElement&&i<nameText.length){nameElement.innerHTML+=nameText.charAt(i);i++;setTimeout(typeWriter,100);}}
             typeWriter();
-            revealOnScroll(); // Panggil sekali saat load
-            window.addEventListener('scroll', revealOnScroll);
-        });
 
+            const revealElements=document.querySelectorAll('.reveal');
+            const revealOnScroll=()=>{const wh=window.innerHeight;for(let i=0;i<revealElements.length;i++){const et=revealElements[i].getBoundingClientRect().top;if(et<wh-100){revealElements[i].classList.add('visible');}}};
+            window.addEventListener('scroll',revealOnScroll);
+            revealOnScroll();
+
+            const mobileMenuButton=document.getElementById('mobile-menu-button');
+            const mobileMenu=document.getElementById('mobile-menu');
+            const mobileMenuLinks=mobileMenu.querySelectorAll('a');
+            mobileMenuButton.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));
+            mobileMenuLinks.forEach(link=>{link.addEventListener('click',()=>mobileMenu.classList.add('hidden'));});
+
+            const askAiButton=document.getElementById('ask-ai-btn');
+            const aiQuestionInput=document.getElementById('ai-question');
+            const aiResponseEl=document.getElementById('ai-response');
+            const aiLoader=document.getElementById('ai-loader');
+            const systemPrompt=`You are an AI career assistant for Ridho Karunia Setiawan. Your task is to answer questions from portfolio visitors (like recruiters) based on the provided information. Answer professionally, concisely, and positively. Always use information from this context. Do not make up information. Context: Ridho is a Software Engineering vocational school graduate, has internship experience as an Android & Web Developer at UGM, and is now an Information Systems undergraduate student at Amikom. His main projects include the "Biomastery" AR app, a CRUD system with Laravel (2nd place in LKS competition), and being a WordPress mentor. He holds a Junior Web Developer certification from BNSP.`;
+            const getAiResponse=async()=>{const userQuery=aiQuestionInput.value.trim();if(!userQuery){aiResponseEl.textContent="Please enter a question first.";return;}
+            aiLoader.classList.remove('hidden');aiResponseEl.textContent='';askAiButton.disabled=true;
+            const apiKey="";const apiUrl=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const payload={contents:[{parts:[{text:userQuery}]}],systemInstruction:{parts:[{text:systemPrompt}]},};
+            try{const response=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application-json'},body:JSON.stringify(payload)});if(!response.ok){throw new Error(`API Error: ${response.status}`);}
+            const result=await response.json();const text=result.candidates?.[0]?.content?.parts?.[0]?.text;aiResponseEl.textContent=text||"Sorry, an error occurred while processing the answer.";}
+            catch(error){console.error("Error calling Gemini API:",error);aiResponseEl.textContent="Failed to connect with the AI Assistant. Please check your connection and try again.";}
+            finally{aiLoader.classList.add('hidden');askAiButton.disabled=false;}};
+            askAiButton.addEventListener('click',getAiResponse);
+            aiQuestionInput.addEventListener('keypress',(e)=>{if(e.key==='Enter')getAiResponse();});
+
+            const imageModal=document.getElementById('image-modal');
+            const modalImage=document.getElementById('modal-image');
+            const closeModalBtn=document.getElementById('close-modal-btn');
+            const galleryImages=document.querySelectorAll('.gallery-img');
+            const openModal=(src)=>{modalImage.src=src;imageModal.classList.remove('hidden','opacity-0');imageModal.querySelector('.modal-content').classList.remove('scale-95');};
+            const closeModal=()=>{imageModal.classList.add('opacity-0');imageModal.querySelector('.modal-content').classList.add('scale-95');setTimeout(()=>imageModal.classList.add('hidden'),300);};
+            galleryImages.forEach(img=>{img.addEventListener('click',(e)=>{e.stopPropagation();openModal(img.src);});});
+            closeModalBtn.addEventListener('click',closeModal);
+            imageModal.addEventListener('click',(e)=>{if(e.target===imageModal)closeModal();});
+            window.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!imageModal.classList.contains('hidden')){closeModal();}});
+        });
     </script>
 </body>
 </html>
