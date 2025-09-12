@@ -149,7 +149,6 @@
 <body class="bg-[#0d0c1d]">
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Header / Navigation -->
     <header class="bg-black/30 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-[var(--primary-glow)]/20">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="font-orbitron text-2xl font-bold tracking-widest neon-text-primary">Portofolio</a>
@@ -178,7 +177,6 @@
     </header>
 
     <main class="container mx-auto px-6 pt-24">
-        <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center reveal">
             <div class="z-10">
                 <h1 id="typewriter-name" class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider text-white mb-4"></h1>
@@ -189,26 +187,29 @@
             </div>
         </section>
 
-        <!-- About Me -->
         <section id="about" class="py-20 reveal">
             <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">About Me</h2>
-            <div class="glass-card-v2 p-6 md:p-8 rounded-lg max-w-4xl mx-auto" style="text-align: justify;">
-                <p class="text-base md:text-lg leading-relaxed text-gray-300">
-                    I am a dedicated and certified Junior Web Developer, originally from Karanganyar Regency and a graduate of SMK Negeri 2 Surakarta, where I majored in Software Engineering. My passion for technology was sparked in vocational school, leading me to pursue comprehensive training programs and achieve key industry certifications from BNSP. 
-                </p>
-                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
-                    My professional experience includes a formative internship at Gadjah Mada University's Vocational School, where I contributed as both an Android and Frontend Web Developer, gaining valuable hands-on experience in a dynamic academic environment.
-                </p>
-                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
-                    Currently, I am advancing my expertise by pursuing a Bachelor's degree in Information Systems at Amikom University Yogyakarta. My academic pursuits are complemented by a deep dive into game development, where I am mastering new programming languages such as C++. As a creator, I also develop educational IT-themed games using Roblox Studio.
-                </p>
-                <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
-                    Driven by an entrepreneurial spirit and a desire to create impactful solutions, I have founded FoodLink, a business product designed to combat food waste in Indonesia. My overarching career goal is to continue to innovate at the intersection of technology and business, leveraging my skills to solve meaningful real-world challenges.
-                </p>
+            <div class="glass-card-v2 p-6 md:p-8 rounded-lg max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-shrink-0">
+                    <img src="pictures/1745668169418.jpeg" alt="Ridho Karunia Setiawan" class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-[var(--primary-glow)] shadow-lg shadow-[var(--primary-glow)]/30">
+                </div>
+                <div style="text-align: justify;">
+                    <p class="text-base md:text-lg leading-relaxed text-gray-300">
+                        I am a dedicated and certified Junior Web Developer, originally from Karanganyar Regency and a graduate of SMK Negeri 2 Surakarta, where I majored in Software Engineering. My passion for technology was sparked in vocational school, leading me to pursue comprehensive training programs and achieve key industry certifications from BNSP. 
+                    </p>
+                    <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                        My professional experience includes a formative internship at Gadjah Mada University's Vocational School, where I contributed as both an Android and Frontend Web Developer, gaining valuable hands-on experience in a dynamic academic environment.
+                    </p>
+                    <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                        Currently, I am advancing my expertise by pursuing a Bachelor's degree in Information Systems at Amikom University Yogyakarta. My academic pursuits are complemented by a deep dive into game development, where I am mastering new programming languages such as C++. As a creator, I also develop educational IT-themed games using Roblox Studio.
+                    </p>
+                    <p class="mt-4 text-base md:text-lg leading-relaxed text-gray-300">
+                        Driven by an entrepreneurial spirit and a desire to create impactful solutions, I have founded FoodLink, a business product designed to combat food waste in Indonesia. My overarching career goal is to continue to innovate at the intersection of technology and business, leveraging my skills to solve meaningful real-world challenges.
+                    </p>
+                </div>
             </div>
-        </section>
+            </section>
         
-        <!-- AI Career Assistant -->
         <section id="ai-assistant" class="py-20 reveal">
             <h2 class="font-orbitron text-4xl font-bold text-center mb-4 neon-text-primary">AI Career Assistant</h2>
             <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Have questions about my qualifications? Ask my AI assistant, powered by Google Gemini.</p>
@@ -230,12 +231,10 @@
             </div>
         </section>
 
-        <!-- Professional Experience -->
         <section id="experience" class="py-20">
              <h2 class="font-orbitron text-4xl font-bold text-center mb-20 neon-text-primary reveal">Professional Experience</h2>
              <div class="relative max-w-4xl mx-auto timeline">
                 
-                <!-- Item 1: General Legal Counsel -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="glass-card-v2 p-6 rounded-lg">
@@ -251,7 +250,6 @@
                     </div>
                 </div>
 
-                <!-- Item 2: Wordpress IT Mentor -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="glass-card-v2 p-6 rounded-lg">
@@ -275,7 +273,6 @@
                     </div>
                 </div>
 
-                <!-- Item 3: Moderator -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="glass-card-v2 p-6 rounded-lg">
@@ -300,7 +297,6 @@
                     </div>
                 </div>
 
-                <!-- Item 4: Web Developer (Intern) -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="glass-card-v2 p-6 rounded-lg">
@@ -326,7 +322,6 @@
                     </div>
                 </div>
 
-                <!-- Item 5: Android Developer (Intern) -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="glass-card-v2 p-6 rounded-lg">
@@ -352,7 +347,6 @@
              </div>
         </section>
 
-        <!-- My Projects -->
         <section id="projects" class="py-20 reveal">
     <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">My Projects</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -542,7 +536,6 @@ window.addEventListener('keydown', (e) => {
 });
 </script>
 
-        <!-- Education -->
         <section id="education" class="py-20 reveal">
             <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">Education</h2>
             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -559,7 +552,6 @@ window.addEventListener('keydown', (e) => {
             </div>
         </section>
 
-        <!-- Licenses & Certifications -->
         <section id="skills" class="py-20 reveal">
             <h2 class="font-orbitron text-4xl font-bold text-center mb-12 neon-text-primary">Licenses & Certifications</h2>
              <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -595,6 +587,16 @@ window.addEventListener('keydown', (e) => {
              <h3 class="font-orbitron text-3xl font-bold text-center mt-20 mb-8 text-white">Awards</h3>
              <div class="max-w-4xl mx-auto space-y-8">
         <div class="glass-card-v2 p-6 rounded-lg">
+            <p class="text-sm text-[var(--primary-glow)]">January 2025</p>
+            <h4 class="text-lg font-bold text-white">Nomination - Student Work Exhibition of Information Systems University Amikom Yogyakarta</h4>
+            <p class="text-gray-400">Programming Skill - Category, Study Program Level</p>
+            <div class="mt-4 border-t border-white/10 pt-4 flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div class="flex gap-2 flex-wrap justify-start flex-grow">
+                   <img src="pictures/certificate/sertif_gemasi_page-0001.jpg" alt="Award Certificate Placeholder" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
+                </div>
+            </div>
+        </div>
+        <div class="glass-card-v2 p-6 rounded-lg">
             <p class="text-sm text-[var(--primary-glow)]">March 2024</p>
             <h4 class="text-lg font-bold text-white">2nd Place - Vocational School Student Competition</h4>
             <p class="text-gray-400">Web Technologies Design category, Surakarta City Level</p>
@@ -605,37 +607,25 @@ window.addEventListener('keydown', (e) => {
             </div>
         </div>
 
-        <div class="glass-card-v2 p-6 rounded-lg">
-            <p class="text-sm text-[var(--primary-glow)]">January 2025</p>
-            <h4 class="text-lg font-bold text-white">Nomination - Student Work Exhibition of Information Systems University Amikom Yogyakarta</h4>
-            <p class="text-gray-400">Programming Skill - Category, Study Program Level</p>
-            <div class="mt-4 border-t border-white/10 pt-4 flex flex-col md:flex-row items-start md:items-center gap-4">
-                <div class="flex gap-2 flex-wrap justify-start flex-grow">
-                   <img src="pictures/certificate/sertif_gemasi_page-0001.jpg" alt="Award Certificate Placeholder" class="gallery-img rounded-md h-14 cursor-pointer hover:opacity-80 transition-opacity">
-                </div>
-            </div>
-        </div>
+        
         </section>
 
-        <!-- Contact -->
         <section id="contact" class="py-20 text-center reveal">
              <h2 class="font-orbitron text-4xl font-bold text-center mb-8 neon-text-primary">Contact Me</h2>
              <p class="text-lg text-gray-300 mb-8">I'm open to new collaboration opportunities and projects.</p>
              <a href="mailto:ridhokarunia999@example.com" class="inline-block px-8 py-3 rounded-md neon-button-v2">
-                    Send Email
+                Send Email
                 </a>
         </section>
 
     </main>
     
-    <!-- Footer -->
     <footer class="border-t border-[var(--primary-glow)]/20 mt-20 py-8">
         <div class="container mx-auto px-6 text-center text-gray-500">
             <p>&copy; 2025 Ridho Karunia Setiawan. All rights reserved.</p>
         </div>
     </footer>
     
-    <!-- Image Modal -->
     <div id="image-modal" class="modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 hidden opacity-0">
         <div class="modal-content bg-gray-900/50 backdrop-blur-sm border border-white/10 p-2 rounded-lg max-w-4xl max-h-full w-full transform scale-95">
              <img id="modal-image" src="" alt="Enlarged Image View" class="w-full h-auto max-h-[85vh] object-contain rounded">
@@ -730,9 +720,8 @@ window.addEventListener('keydown', (e) => {
             galleryImages.forEach(img=>{img.addEventListener('click',(e)=>{e.stopPropagation();openModal(img.src);});});
             closeModalBtn.addEventListener('click',closeModal);
             imageModal.addEventListener('click',(e)=>{if(e.target===imageModal)closeModal();});
-            window.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!imageModal.classList.contains('hidden')){closeModal();}});
+            window.addEventListener('keydown',(e)=>{if(e.key === 'Escape' && !imageModal.classList.contains('hidden')){closeModal();}});
         });
     </script>
 </body>
 </html>
-
