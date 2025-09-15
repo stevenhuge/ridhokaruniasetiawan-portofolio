@@ -703,9 +703,9 @@ window.addEventListener('keydown', (e) => {
         const getAiResponse=async()=>{const userQuery=aiQuestionInput.value.trim();if(!userQuery){aiResponseEl.textContent="Please enter a question first.";return;}
         aiLoader.classList.remove('hidden');aiResponseEl.textContent='';askAiButton.disabled=true;
         const apiKey="AIzaSyCcqX51mQ_fllrhQRsH05UykSYVvkyLFxY"; // <<< KEY HAS BEEN UPDATED HERE
-        const apiUrl=`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+        // const apiUrl=`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
         const payload={contents:[{parts:[{text:`${systemPrompt} User Question: ${userQuery}`}]}]};
-        try{const response=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok){throw new Error(`API Error: ${response.status}`);}
+        try{const response=await fetch(apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok){throw new Error(`API Error: ${response.status}`);}
         const result=await response.json();const text=result.candidates?.[0]?.content?.parts?.[0]?.text;aiResponseEl.textContent=text||"Sorry, an error occurred while processing the answer.";}
         catch(error){console.error("Error calling Gemini API:",error);aiResponseEl.textContent="Failed to connect with the AI Assistant. Please check your connection and try again.";}
         finally{aiLoader.classList.add('hidden');askAiButton.disabled=false;}};
